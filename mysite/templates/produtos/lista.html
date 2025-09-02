@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Produtos{% if categoria %} — {{ categoria.nome }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 m-0">
+    {% if categoria %}{{ categoria.nome }}{% else %}Produtos{% endif %}
+    <small class="text-muted fw-normal">({{ total }} resultados)</small>
+  </h1>
+
+  <form class="d-flex" action="{% if categoria %}{% url 'produtos_por_categoria' categoria.id %}{% else %}{% url 'lista_produtos' %}{% endif %}" method="get">
+    <input class="form-control me-2" type="text" name="q" placeholder="Buscar..." value="{{ q|default:'' }}">
+    <button class="btn btn-primary">Filtrar</button>
+  </form>
+</div>
+
+{% if page_obj.object_list %}
+  <div class="row g-3">
+    {% for p in page_obj.object_list %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card produto-card h-100">
+          {% if p.imagem %}
+            <img src="{{ p.imagem.url }}" class="card-img-top" alt="{{ p.nome }}">
+          {% else %}
+            <div class="bg-light d-flex align-items-center justify-content-center" style="height:180px;">
+              <span class="text-muted">Sem imagem</span>
+            </div>
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <h2 class="h6 card-title">{{ p.nome }}</h2>
+            <p class="card-text text-muted small mb-2">{{ p.categoria.nome }}</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">R$ {{ p.preco }}</span>
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'detalhe_produto' p.id %}">
+                Ver
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?q={{ q }}&page={{ page_obj.previous_page_number }}">Anterior</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+      {% endif %}
+
+      <li class="page-item disabled">
+        <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+      </li>
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?q={{ q }}&page={{ page_obj.next_page_number }}">Próxima</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Próxima</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% else %}
+  <div class="alert alert-light border text-center">
+    Nenhum produto encontrado.
+  </div>
+{% endif %}
+{% endblock %}
