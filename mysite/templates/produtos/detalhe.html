@@ -21,10 +21,17 @@
     <p class="lead">R$ {{ produto.preco }}</p>
     <p>{{ produto.descricao|default:"Sem descrição." }}</p>
 
-    <div class="d-flex gap-2 mt-3">
-      <a href="#" class="btn btn-primary disabled" aria-disabled="true" title="Implementaremos no Carrinho (Fase 2)">Adicionar ao Carrinho</a>
-      <a href="{% url 'lista_produtos' %}" class="btn btn-outline-secondary">Voltar</a>
-    </div>
+    <!-- form único dentro da coluna -->
+    <form method="post" action="{% url 'adicionar_ao_carrinho' produto.id %}" class="mt-3">
+      {% csrf_token %}
+      <div class="input-group" style="max-width: 260px;">
+        <input type="number" name="quantidade" class="form-control" value="1" min="1" step="1">
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="btn btn-primary" type="submit">Adicionar ao carrinho</button>
+      </div>
+    </form>
+
+    <a href="{% url 'lista_produtos' %}" class="btn btn-outline-secondary mt-3">Voltar</a>
   </div>
 </div>
 {% endblock %}

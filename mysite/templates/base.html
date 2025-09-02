@@ -41,9 +41,23 @@
         <input class="form-control me-2" type="search" name="q" placeholder="Buscar produtos..." value="{{ q|default:'' }}">
         <button class="btn btn-outline-primary" type="submit">Buscar</button>
       </form>
+      <a class="btn btn-outline-secondary ms-2" href="{% url 'ver_carrinho' %}">
+        🛒 Carrinho <span class="badge text-bg-secondary">{{ cart_total_itens|default:0 }}</span>
+      </a>
+
     </div>
   </div>
 </nav>
+{% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
 
 <main class="container py-4">
   {% block content %}{% endblock %}

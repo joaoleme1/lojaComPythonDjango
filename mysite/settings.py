@@ -62,7 +62,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "mysite.context_processors.categorias"
+                "mysite.context_processors.categorias",
+                "mysite.context_processors.carrinho_info",
+
 
             ],
         },

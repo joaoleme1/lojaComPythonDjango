@@ -35,6 +35,15 @@
                 Ver
               </a>
             </div>
+
+            <!-- form corrigido: usa p.id e guarda a URL atual em 'next' -->
+            <form method="post" action="{% url 'adicionar_ao_carrinho' p.id %}" class="mt-2">
+              {% csrf_token %}
+              <input type="hidden" name="quantidade" value="1">
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button class="btn btn-primary w-100" type="submit">Adicionar ao carrinho</button>
+            </form>
+
           </div>
         </div>
       </div>

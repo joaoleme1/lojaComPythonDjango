@@ -30,6 +30,12 @@ urlpatterns = [
     path("produtos/", views.lista_produtos, name="lista_produtos"),
     path("produtos/categoria/<int:categoria_id>/", views.produtos_por_categoria, name="produtos_por_categoria"),
     path("produtos/<int:produto_id>/", views.detalhe_produto, name="detalhe_produto"),
+    path("carrinho/", views.ver_carrinho, name="ver_carrinho"),
+    path("carrinho/adicionar/<int:produto_id>/", views.adicionar_ao_carrinho, name="adicionar_ao_carrinho"),
+    path("carrinho/remover/<int:produto_id>/", views.remover_do_carrinho, name="remover_do_carrinho"),
+    path("carrinho/atualizar/<int:produto_id>/", views.atualizar_quantidade, name="atualizar_quantidade"),
+    path("carrinho/limpar/", views.limpar_carrinho, name="limpar_carrinho"),
+
 ]
 
 if settings.DEBUG:
