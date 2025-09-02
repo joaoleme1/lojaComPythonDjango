@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Checkout · Minha Loja{% endblock %}
+{% block content %}
+
+<h1 class="h4 mb-3">Finalizar compra</h1>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-body">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nome completo</label>
+              <input type="text" name="nome" value="{{ form.nome.value|default_if_none:'' }}" class="form-control {% if form.nome.errors %}is-invalid{% endif %}">
+              {% for e in form.nome.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">E-mail</label>
+              <input type="email" name="email" value="{{ form.email.value|default_if_none:'' }}" class="form-control {% if form.email.errors %}is-invalid{% endif %}">
+              {% for e in form.email.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Telefone</label>
+              <input type="text" name="telefone" value="{{ form.telefone.value|default_if_none:'' }}" class="form-control {% if form.telefone.errors %}is-invalid{% endif %}">
+              {% for e in form.telefone.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-12">
+              <label class="form-label">Endereço</label>
+              <input type="text" name="endereco" value="{{ form.endereco.value|default_if_none:'' }}" class="form-control {% if form.endereco.errors %}is-invalid{% endif %}">
+              {% for e in form.endereco.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-12">
+              <label class="form-label">Observações</label>
+              <textarea name="observacoes" rows="3" class="form-control {% if form.observacoes.errors %}is-invalid{% endif %}">{{ form.observacoes.value|default_if_none:'' }}</textarea>
+              {% for e in form.observacoes.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mt-4">
+            <a class="btn btn-outline-secondary" href="{% url 'ver_carrinho' %}">Voltar ao carrinho</a>
+            <button class="btn btn-success" type="submit">Confirmar pedido</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header">Resumo do pedido</div>
+      <div class="card-body">
+        {% for i in itens %}
+          <div class="d-flex justify-content-between mb-2">
+            <div>
+              <div class="fw-medium">{{ i.nome }}</div>
+              <div class="text-muted small">{{ i.quantidade }} × R$ {{ i.preco }}</div>
+            </div>
+            <div class="fw-semibold">R$ {{ i.subtotal }}</div>
+          </div>
+        {% endfor %}
+        <hr>
+        <div class="d-flex justify-content-between">
+          <div class="fw-semibold">Total</div>
+          <div class="h5 m-0">R$ {{ total }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -59,7 +59,8 @@
     <a class="btn btn-outline-secondary" href="{% url 'lista_produtos' %}">↩ Continuar comprando</a>
     <div class="d-flex gap-2">
       <a class="btn btn-outline-danger" href="{% url 'limpar_carrinho' %}">Limpar carrinho</a>
-      <a class="btn btn-success" href="#">Finalizar compra</a> 
+      <a class="btn btn-success" href="{% url 'checkout' %}">Finalizar compra</a>
+
     </div>
   </div>
 {% else %}

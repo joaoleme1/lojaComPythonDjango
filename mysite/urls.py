@@ -20,7 +20,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from . import views  # 👈 suas views estão em mysite/views.py
+from . import views 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -35,6 +35,8 @@ urlpatterns = [
     path("carrinho/remover/<int:produto_id>/", views.remover_do_carrinho, name="remover_do_carrinho"),
     path("carrinho/atualizar/<int:produto_id>/", views.atualizar_quantidade, name="atualizar_quantidade"),
     path("carrinho/limpar/", views.limpar_carrinho, name="limpar_carrinho"),
+    path("checkout/", views.checkout, name="checkout"),
+    path("pedido/sucesso/<int:pedido_id>/", views.pedido_sucesso, name="pedido_sucesso"),
 
 ]
 

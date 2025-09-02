@@ -64,7 +64,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "mysite.context_processors.categorias",
                 "mysite.context_processors.carrinho_info",
-
+                
 
             ],
         },
